@@ -1,0 +1,2 @@
+python	Identifier	Line 1
+scanner.py	Unknown	Line 1
