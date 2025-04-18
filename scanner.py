@@ -1,3 +1,5 @@
+# scanner_core.py
+
 TOKEN_TYPES = {
     "int": "DataType",
     "float": "DataType",
@@ -34,7 +36,6 @@ def tokenize_line(line_text, line_number):
     symbols = ["==", "=", ";", "+", "-", "*", "/"]
     for sym in symbols:
         line_text = line_text.replace(sym, f" {sym} ")
-
     parts = line_text.split()
 
     for part in parts:
@@ -46,9 +47,7 @@ def tokenize_line(line_text, line_number):
             token_type = "Identifier"
         else:
             token_type = "Unknown"
-
         tokens.append(Token(part, token_type, line_number))
-    
     return tokens
 
 def analyze_code(code):
@@ -64,28 +63,4 @@ def write_tokens_to_file(tokens, base_name="output"):
     with open(file_name, "w", encoding="utf-8") as f:
         for token in tokens:
             f.write(str(token) + "\n")
-    print(f"\n[✔] Tokens written to: {file_name}")
-
-# ------------------------- Main Program -------------------------
-
-print("ادخل الكود سطر بسطر. لما تخلص اكتب END في سطر لوحده:")
-lines = []
-while True:
-    line = input()
-    if line.strip().upper() == "END":
-        break
-    lines.append(line)
-
-user_code = "\n".join(lines)
-
-# تحليل الكود
-tokens = analyze_code(user_code)
-
-# طباعة النتائج
-print("\n--- Tokens ---")
-for token in tokens:
-    print(token)
-
-# تحديد اسم مناسب للفايل من أول كلمة
-first_word = lines[0].split()[0] if lines and lines[0].strip() != "" else "output"
-write_tokens_to_file(tokens, base_name=first_word)
+    return file_name  # عشان نعرض اسم الملف بعدين في الواجهة
